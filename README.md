@@ -138,7 +138,7 @@ Defaults for Kafka
 
 
 
-## <a name="AvroFormat">func</a> [AvroFormat](./kafka/kafka.go?s=3096:3127#L159)
+## <a name="AvroFormat">func</a> [AvroFormat](./kafka/kafka.go?s=3096:3127#L160)
 ``` go
 func AvroFormat(k *Kafka) error
 ```
@@ -146,7 +146,7 @@ AvroFormat set Format to Avro
 
 
 
-## <a name="BinaryFormat">func</a> [BinaryFormat](./kafka/kafka.go?s=2704:2737#L135)
+## <a name="BinaryFormat">func</a> [BinaryFormat](./kafka/kafka.go?s=2704:2737#L136)
 ``` go
 func BinaryFormat(k *Kafka) error
 ```
@@ -154,7 +154,7 @@ BinaryFormat set Format to Binary
 
 
 
-## <a name="EarliestOffset">func</a> [EarliestOffset](./kafka/kafka.go?s=2261:2296#L111)
+## <a name="EarliestOffset">func</a> [EarliestOffset](./kafka/kafka.go?s=2261:2296#L112)
 ``` go
 func EarliestOffset(k *Kafka) error
 ```
@@ -162,7 +162,7 @@ EarliestOffset set Offset to Earliest
 
 
 
-## <a name="JSONFormat">func</a> [JSONFormat](./kafka/kafka.go?s=2997:3028#L153)
+## <a name="JSONFormat">func</a> [JSONFormat](./kafka/kafka.go?s=2997:3028#L154)
 ``` go
 func JSONFormat(k *Kafka) error
 ```
@@ -170,7 +170,7 @@ JSONFormat set Format to JSON
 
 
 
-## <a name="LargestOffset">func</a> [LargestOffset](./kafka/kafka.go?s=2595:2629#L129)
+## <a name="LargestOffset">func</a> [LargestOffset](./kafka/kafka.go?s=2595:2629#L130)
 ``` go
 func LargestOffset(k *Kafka) error
 ```
@@ -178,7 +178,7 @@ LargestOffset set Offset to Latest
 
 
 
-## <a name="LatestOffset">func</a> [LatestOffset](./kafka/kafka.go?s=2372:2405#L117)
+## <a name="LatestOffset">func</a> [LatestOffset](./kafka/kafka.go?s=2372:2405#L118)
 ``` go
 func LatestOffset(k *Kafka) error
 ```
@@ -186,7 +186,7 @@ LatestOffset set Offset to Latest
 
 
 
-## <a name="SetAccept">func</a> [SetAccept](./kafka/kafka.go?s=3513:3561#L181)
+## <a name="SetAccept">func</a> [SetAccept](./kafka/kafka.go?s=3513:3561#L182)
 ``` go
 func SetAccept(accept string) func(*Kafka) error
 ```
@@ -194,7 +194,7 @@ SetAccept applies Accept to Kafka.
 
 
 
-## <a name="SetContentType">func</a> [SetContentType](./kafka/kafka.go?s=3682:3740#L189)
+## <a name="SetContentType">func</a> [SetContentType](./kafka/kafka.go?s=3682:3740#L190)
 ``` go
 func SetContentType(contentType string) func(*Kafka) error
 ```
@@ -202,7 +202,7 @@ SetContentType applies ContentType to Kafka.
 
 
 
-## <a name="SetTimeout">func</a> [SetTimeout](./kafka/kafka.go?s=3202:3259#L165)
+## <a name="SetTimeout">func</a> [SetTimeout](./kafka/kafka.go?s=3202:3259#L166)
 ``` go
 func SetTimeout(timeout time.Duration) func(*Kafka) error
 ```
@@ -210,7 +210,7 @@ SetTimeout applies Timeout to Kafka.
 
 
 
-## <a name="SetURL">func</a> [SetURL](./kafka/kafka.go?s=3366:3408#L173)
+## <a name="SetURL">func</a> [SetURL](./kafka/kafka.go?s=3366:3408#L174)
 ``` go
 func SetURL(url string) func(*Kafka) error
 ```
@@ -218,7 +218,7 @@ SetURL applies URL to Kafka.
 
 
 
-## <a name="SmallestOffset">func</a> [SmallestOffset](./kafka/kafka.go?s=2483:2518#L123)
+## <a name="SmallestOffset">func</a> [SmallestOffset](./kafka/kafka.go?s=2483:2518#L124)
 ``` go
 func SmallestOffset(k *Kafka) error
 ```
@@ -234,7 +234,7 @@ Stringer returns formated string.
 
 
 
-## <a name="URLJoin">func</a> [URLJoin](./kafka/kafka.go?s=5637:5700#L270)
+## <a name="URLJoin">func</a> [URLJoin](./kafka/kafka.go?s=5637:5700#L271)
 ``` go
 func URLJoin(urlstr string, pathstrs ...string) (string, error)
 ```
@@ -242,7 +242,7 @@ URLJoin joins url with path and return the whole url string.
 
 
 
-## <a name="V1Version">func</a> [V1Version](./kafka/kafka.go?s=2805:2835#L141)
+## <a name="V1Version">func</a> [V1Version](./kafka/kafka.go?s=2805:2835#L142)
 ``` go
 func V1Version(k *Kafka) error
 ```
@@ -250,7 +250,7 @@ V1Version set Version to V1
 
 
 
-## <a name="V2Version">func</a> [V2Version](./kafka/kafka.go?s=2900:2930#L147)
+## <a name="V2Version">func</a> [V2Version](./kafka/kafka.go?s=2900:2930#L148)
 ``` go
 func V2Version(k *Kafka) error
 ```
@@ -280,7 +280,7 @@ Argument is the argument for both method Records and Messages
 
 
 
-## <a name="Broker">type</a> [Broker](./kafka/kafka.go?s=597:648#L36)
+## <a name="Broker">type</a> [Broker](./kafka/kafka.go?s=597:648#L37)
 ``` go
 type Broker struct {
     Brokers []int `json:"brokers"`
@@ -568,7 +568,7 @@ Unsubscribe from topics currently subscribed.
 
 
 
-## <a name="ErrorMessage">type</a> [ErrorMessage](./kafka/kafka.go?s=847:966#L50)
+## <a name="ErrorMessage">type</a> [ErrorMessage](./kafka/kafka.go?s=847:966#L51)
 ``` go
 type ErrorMessage struct {
     ErrorCode int    `json:"error_code,omitempty"`
@@ -586,7 +586,7 @@ ErrorMessage for API response
 
 
 
-## <a name="Format">type</a> [Format](./kafka/kafka.go?s=693:706#L41)
+## <a name="Format">type</a> [Format](./kafka/kafka.go?s=693:706#L42)
 ``` go
 type Format string
 ```
@@ -601,7 +601,7 @@ Format is one of json, binary or avro
 
 
 
-## <a name="Kafka">type</a> [Kafka](./kafka/kafka.go?s=364:536#L21)
+## <a name="Kafka">type</a> [Kafka](./kafka/kafka.go?s=364:536#L22)
 ``` go
 type Kafka struct {
     URL         string
@@ -621,7 +621,7 @@ Kafka represents a Kafka REST API.
 
 
 
-### <a name="New">func</a> [New](./kafka/kafka.go?s=5919:5974#L281)
+### <a name="New">func</a> [New](./kafka/kafka.go?s=5919:5974#L282)
 ``` go
 func New(options ...func(*Kafka) error) (*Kafka, error)
 ```
@@ -631,7 +631,7 @@ New returns a Kafka instance with default setting.
 
 
 
-### <a name="Kafka.Broker">func</a> (\*Kafka) [Broker](./kafka/kafka.go?s=6489:6530#L313)
+### <a name="Kafka.Broker">func</a> (\*Kafka) [Broker](./kafka/kafka.go?s=6489:6530#L314)
 ``` go
 func (k *Kafka) Broker() (*Broker, error)
 ```
@@ -640,7 +640,7 @@ Broker returns the brokers.
 
 
 
-### <a name="Kafka.HTTPClient">func</a> (\*Kafka) [HTTPClient](./kafka/kafka.go?s=1851:1892#L93)
+### <a name="Kafka.HTTPClient">func</a> (\*Kafka) [HTTPClient](./kafka/kafka.go?s=1851:1892#L94)
 ``` go
 func (k *Kafka) HTTPClient() *http.Client
 ```
@@ -649,7 +649,7 @@ HTTPClient creates a new http.Client with timeout.
 
 
 
-### <a name="Kafka.NewConsumers">func</a> (\*Kafka) [NewConsumers](./kafka/kafka.go?s=6271:6335#L300)
+### <a name="Kafka.NewConsumers">func</a> (\*Kafka) [NewConsumers](./kafka/kafka.go?s=6271:6335#L301)
 ``` go
 func (k *Kafka) NewConsumers(consumerGroup ...string) *Consumers
 ```
@@ -658,7 +658,7 @@ NewConsumers returns a Consumers instance.
 
 
 
-### <a name="Kafka.NewTopics">func</a> (\*Kafka) [NewTopics](./kafka/kafka.go?s=6138:6173#L292)
+### <a name="Kafka.NewTopics">func</a> (\*Kafka) [NewTopics](./kafka/kafka.go?s=6138:6173#L293)
 ``` go
 func (k *Kafka) NewTopics() *Topics
 ```
@@ -667,7 +667,7 @@ NewTopics returns a Topics instance.
 
 
 
-### <a name="Kafka.SetOption">func</a> (\*Kafka) [SetOption](./kafka/kafka.go?s=2055:2117#L101)
+### <a name="Kafka.SetOption">func</a> (\*Kafka) [SetOption](./kafka/kafka.go?s=2055:2117#L102)
 ``` go
 func (k *Kafka) SetOption(options ...func(*Kafka) error) error
 ```
@@ -697,7 +697,7 @@ Message is a single Kafka message
 
 
 
-## <a name="Offset">type</a> [Offset](./kafka/kafka.go?s=749:762#L44)
+## <a name="Offset">type</a> [Offset](./kafka/kafka.go?s=749:762#L45)
 ``` go
 type Offset string
 ```
@@ -1025,7 +1025,7 @@ TopicsSubscription with topics
 
 
 
-## <a name="Version">type</a> [Version](./kafka/kafka.go?s=796:810#L47)
+## <a name="Version">type</a> [Version](./kafka/kafka.go?s=796:810#L48)
 ``` go
 type Version string
 ```

@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -256,7 +257,7 @@ func doRequest(method, url string, client *http.Client, b *bytes.Buffer, request
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = responseHooker(res)
 	if err != nil {
@@ -327,7 +328,7 @@ func (k *Kafka) Broker() (*Broker, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
@@ -342,4 +343,10 @@ func (k *Kafka) Broker() (*Broker, error) {
 	}
 
 	return b, nil
+}
+
+func closeBody(res *http.Response) {
+	// Drain and close the body to let the Transport reuse the connection
+	io.Copy(ioutil.Discard, res.Body)
+	res.Body.Close()
 }

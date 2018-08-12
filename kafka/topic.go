@@ -95,7 +95,7 @@ func (ts *Topics) Names() (*TopicNames, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
@@ -130,7 +130,7 @@ func (ts *Topics) Topic(topicName string) (*Topic, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
@@ -172,7 +172,7 @@ func (ts *Topics) Produce(topicName string, message *ProducerMessage) (*Producer
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {

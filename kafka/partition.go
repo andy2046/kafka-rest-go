@@ -56,7 +56,7 @@ func (ps *Partitions) Partitions(topicName ...string) (*[]Partition, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
@@ -96,7 +96,7 @@ func (ps *Partitions) Partition(partitionID int, topicName ...string) (*Partitio
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
@@ -143,7 +143,7 @@ func (ps *Partitions) Produce(id int, message *ProducerMessage, topicName ...str
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {

@@ -158,7 +158,7 @@ func (cs *Consumers) DeleteConsumer(consumerName string, consumerGroup ...string
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res, http.StatusNoContent)
 	if err != nil {
@@ -194,7 +194,7 @@ func (cs *Consumers) CommitOffsets(consumerOffsets *ConsumerOffsets, consumerNam
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
@@ -229,7 +229,7 @@ func (cs *Consumers) Offsets(consumerOffsetsPartitions *ConsumerOffsetsPartition
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
@@ -278,7 +278,7 @@ func (cs *Consumers) Subscribe(topicSubscription *TopicSubscription, useTopicPat
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res, http.StatusNoContent)
 	if err != nil {
@@ -311,7 +311,7 @@ func (cs *Consumers) Subscriptions(consumerName string, consumerGroup ...string)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res, http.StatusOK)
 	if err != nil {
@@ -351,7 +351,7 @@ func (cs *Consumers) Unsubscribe(consumerName string, consumerGroup ...string) e
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res, http.StatusNoContent)
 	if err != nil {
@@ -388,7 +388,7 @@ func (cs *Consumers) Assign(consumerOffsetsPartitions *ConsumerOffsetsPartitions
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res, http.StatusNoContent)
 	if err != nil {
@@ -421,7 +421,7 @@ func (cs *Consumers) Assignments(consumerName string, consumerGroup ...string) (
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
@@ -465,7 +465,7 @@ func (cs *Consumers) Seek(consumerOffsets *ConsumerOffsets, consumerName string,
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res, http.StatusNoContent)
 	if err != nil {
@@ -502,7 +502,7 @@ func (cs *Consumers) SeekToBeginning(consumerOffsetsPartitions *ConsumerOffsetsP
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res, http.StatusNoContent)
 	if err != nil {
@@ -539,7 +539,7 @@ func (cs *Consumers) SeekToEnd(consumerOffsetsPartitions *ConsumerOffsetsPartiti
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res, http.StatusNoContent)
 	if err != nil {
@@ -596,7 +596,7 @@ func (cs *Consumers) Records(recordsArg Argument) (*[]Message, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
@@ -654,7 +654,7 @@ func (cs *Consumers) Messages(messagesArg Argument) (*[]Message, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
