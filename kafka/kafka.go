@@ -213,7 +213,7 @@ func validateStatusCode(res *http.Response, expectedStatusCode ...int) error {
 	if res.StatusCode != code {
 		errMsg := &ErrorMessage{}
 		err := json.NewDecoder(res.Body).Decode(errMsg)
-		if err != nil {
+		if err != nil && err != io.EOF {
 			body, _ := ioutil.ReadAll(res.Body)
 			return errors.Wrap(errors.New("API Error"), string(body))
 		}
@@ -338,7 +338,7 @@ func (k *Kafka) Broker() (*Broker, error) {
 	b := &Broker{}
 
 	err = json.NewDecoder(res.Body).Decode(b)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 

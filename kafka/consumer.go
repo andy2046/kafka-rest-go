@@ -3,6 +3,7 @@ package kafka
 import (
 	"bytes"
 	"encoding/json"
+	"io"
 	"net/http"
 	"strconv"
 	"time"
@@ -120,7 +121,7 @@ func (cs *Consumers) NewConsumer(consumerRequest *ConsumerRequest, consumerGroup
 		}
 
 		err = json.NewDecoder(res.Body).Decode(ci)
-		if err != nil {
+		if err != nil && err != io.EOF {
 			return err
 		}
 		return nil
@@ -239,7 +240,7 @@ func (cs *Consumers) Offsets(consumerOffsetsPartitions *ConsumerOffsetsPartition
 	cresp := &ConsumerOffsets{}
 
 	err = json.NewDecoder(res.Body).Decode(cresp)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 
@@ -321,7 +322,7 @@ func (cs *Consumers) Subscriptions(consumerName string, consumerGroup ...string)
 	tsub := &TopicsSubscription{}
 
 	err = json.NewDecoder(res.Body).Decode(tsub)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 
@@ -431,7 +432,7 @@ func (cs *Consumers) Assignments(consumerName string, consumerGroup ...string) (
 	cofp := &ConsumerOffsetsPartitions{}
 
 	err = json.NewDecoder(res.Body).Decode(cofp)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 
@@ -606,7 +607,7 @@ func (cs *Consumers) Records(recordsArg Argument) (*[]Message, error) {
 	m := &[]Message{}
 
 	err = json.NewDecoder(res.Body).Decode(m)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 
@@ -664,7 +665,7 @@ func (cs *Consumers) Messages(messagesArg Argument) (*[]Message, error) {
 	m := &[]Message{}
 
 	err = json.NewDecoder(res.Body).Decode(m)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 

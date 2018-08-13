@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
 
@@ -66,7 +67,7 @@ func (ps *Partitions) Partitions(topicName ...string) (*[]Partition, error) {
 	pss := &[]Partition{}
 
 	err = json.NewDecoder(res.Body).Decode(pss)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 
@@ -106,7 +107,7 @@ func (ps *Partitions) Partition(partitionID int, topicName ...string) (*Partitio
 	p := &Partition{}
 
 	err = json.NewDecoder(res.Body).Decode(p)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 
@@ -153,7 +154,7 @@ func (ps *Partitions) Produce(id int, message *ProducerMessage, topicName ...str
 	pr := &ProducerResponse{}
 
 	err = json.NewDecoder(res.Body).Decode(pr)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 

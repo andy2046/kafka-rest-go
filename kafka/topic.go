@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -105,7 +106,7 @@ func (ts *Topics) Names() (*TopicNames, error) {
 	var tn TopicNames
 
 	err = json.NewDecoder(res.Body).Decode(&tn)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 
@@ -140,7 +141,7 @@ func (ts *Topics) Topic(topicName string) (*Topic, error) {
 	t := &Topic{}
 
 	err = json.NewDecoder(res.Body).Decode(t)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 
@@ -182,7 +183,7 @@ func (ts *Topics) Produce(topicName string, message *ProducerMessage) (*Producer
 	pr := &ProducerResponse{}
 
 	err = json.NewDecoder(res.Body).Decode(pr)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, err
 	}
 
