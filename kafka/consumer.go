@@ -30,7 +30,7 @@ type (
 	Consumers struct {
 		Kafka         *Kafka
 		ConsumerGroup string
-		List          []*ConsumerInstance
+		List          []ConsumerInstance
 	}
 
 	// ConsumerOffset are the offsets to commit
@@ -43,12 +43,12 @@ type (
 
 	// ConsumerOffsets data
 	ConsumerOffsets struct {
-		Offsets []*ConsumerOffset `json:"offsets"`
+		Offsets []ConsumerOffset `json:"offsets"`
 	}
 
 	// ConsumerOffsetsPartitions are the partitions for consumer committed offsets
 	ConsumerOffsetsPartitions struct {
-		Partitions []*ConsumerPartitions `json:"partitions"`
+		Partitions []ConsumerPartitions `json:"partitions"`
 	}
 
 	// ConsumerPartitions are the partitions for consumer
@@ -554,7 +554,7 @@ func (cs *Consumers) SeekToEnd(consumerOffsetsPartitions *ConsumerOffsetsPartiti
 // Records arguments include Timeout (optional) MaxBytes (optional) ConsumerName  ConsumerGroup.
 // Timeout is the number of milliseconds for the underlying request to fetch the records. Default to 5000ms.
 // MaxBytes is the maximum number of bytes of unencoded keys and values that should be included in the response. Default is unlimited.
-func (cs *Consumers) Records(recordsArg Argument) (*[]Message, error) {
+func (cs *Consumers) Records(recordsArg Argument) ([]Message, error) {
 	timeout := recordsArg.Timeout
 	maxBytes := recordsArg.MaxBytes
 	consumerName := recordsArg.ConsumerName
@@ -604,7 +604,7 @@ func (cs *Consumers) Records(recordsArg Argument) (*[]Message, error) {
 		return nil, err
 	}
 
-	m := &[]Message{}
+	m := []Message{}
 
 	err = json.NewDecoder(res.Body).Decode(m)
 	if err != nil && err != io.EOF {
@@ -617,7 +617,7 @@ func (cs *Consumers) Records(recordsArg Argument) (*[]Message, error) {
 // Messages consume messages from a topic via API v1.
 // Messages arguments include MaxBytes (optional) TopicName ConsumerName  ConsumerGroup.
 // MaxBytes is the maximum number of bytes of unencoded keys and values that should be included in the response. Default is unlimited.
-func (cs *Consumers) Messages(messagesArg Argument) (*[]Message, error) {
+func (cs *Consumers) Messages(messagesArg Argument) ([]Message, error) {
 	topicName := messagesArg.TopicName
 	maxBytes := messagesArg.MaxBytes
 	consumerName := messagesArg.ConsumerName
@@ -662,7 +662,7 @@ func (cs *Consumers) Messages(messagesArg Argument) (*[]Message, error) {
 		return nil, err
 	}
 
-	m := &[]Message{}
+	m := []Message{}
 
 	err = json.NewDecoder(res.Body).Decode(m)
 	if err != nil && err != io.EOF {
@@ -675,7 +675,7 @@ func (cs *Consumers) Messages(messagesArg Argument) (*[]Message, error) {
 // Poll keep polling messages from a topic.
 // the interval to poll messages is every interval ms, onMessage to handle polled messages.
 // returned func is for cancellation.
-func (cs *Consumers) Poll(interval time.Duration, messagesArg Argument, onMessage func(error, *[]Message)) func() {
+func (cs *Consumers) Poll(interval time.Duration, messagesArg Argument, onMessage func(error, []Message)) func() {
 
 	timedout := make(chan struct{})
 	cancelFunc := func() {
@@ -683,16 +683,15 @@ func (cs *Consumers) Poll(interval time.Duration, messagesArg Argument, onMessag
 	}
 
 	go func() {
-		var timeouted bool
-		var messages *[]Message
+		t := time.NewTicker((time.Duration(interval) * time.Millisecond))
+		var messages []Message
 		var err error
-		for !timeouted {
+		for {
 			select {
 			case <-timedout:
-				timeouted = true
-				timedout = nil
+				t.Stop()
 				return
-			case <-time.After(interval * time.Millisecond):
+			case <-t.C:
 				break
 			}
 

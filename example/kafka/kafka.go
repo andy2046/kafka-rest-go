@@ -28,17 +28,17 @@ func main() {
 	topics := k.NewTopics()
 	// get Topic instance by topic name
 	topic, _ := topics.Topic(topicName)
-	topicPointer := *topic
+	topicPointer := topic
 	fmt.Println(topicPointer.Name, string(topicPointer.Configs))
 	// list Topic's Partitions
 	for _, partition := range topicPointer.Partitions {
-		str, _ := K.Stringer(*partition)
+		str, _ := K.Stringer(partition)
 		fmt.Println(str)
 	}
 
 	// list Topics by name
 	names, _ := topics.Names()
-	for _, name := range *names {
+	for _, name := range names {
 		fmt.Println(name)
 	}
 
@@ -50,7 +50,7 @@ func main() {
 		panic(err)
 	}
 	// list Partition
-	for _, p := range *pss {
+	for _, p := range pss {
 		str, _ := K.Stringer(p)
 		fmt.Println(str)
 	}
@@ -61,7 +61,7 @@ func main() {
 	fmt.Println(s)
 
 	// create new Record and Message to publish
-	record := []*K.ProducerRecord{{Key: json.RawMessage(`"v5"`), Value: json.RawMessage(`"a2Fma2E="`)}, {Value: json.RawMessage(`"Z28="`)}}
+	record := []K.ProducerRecord{{Key: json.RawMessage(`"v5"`), Value: json.RawMessage(`"a2Fma2E="`)}, {Value: json.RawMessage(`"Z28="`)}}
 	message := K.ProducerMessage{Records: record}
 
 	// Produce message to partition
@@ -120,12 +120,12 @@ func main() {
 	}
 
 	// keep polling messages until cancelled or error
-	cancelFunc := c.Poll(3000, mArg, func(err error, msg *[]K.Message) {
+	cancelFunc := c.Poll(3000, mArg, func(err error, msg []K.Message) {
 		if err != nil {
 			panic(err)
 		}
 		fmt.Println("Records:")
-		for _, m := range *msg {
+		for _, m := range msg {
 			s, _ := K.Stringer(m)
 			fmt.Println(s)
 		}
@@ -148,7 +148,7 @@ func main() {
 		panic(err)
 	}
 	fmt.Println("Records:")
-	for _, m2 := range *msg2 {
+	for _, m2 := range msg2 {
 		s, _ := K.Stringer(m2)
 		fmt.Println(s)
 	}

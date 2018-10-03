@@ -15,13 +15,13 @@ type (
 	Topic struct {
 		Name       string          `json:"name"`
 		Configs    json.RawMessage `json:"configs"`
-		Partitions []*Partition    `json:"partitions"`
+		Partitions []Partition     `json:"partitions"`
 	}
 
 	// Topics data
 	Topics struct {
 		Kafka *Kafka
-		List  []*Topic
+		List  []Topic
 	}
 
 	// TopicNames data
@@ -32,9 +32,9 @@ type (
 		KeySchema   string `json:"key_schema,omitempty"`
 		KeySchemaID int    `json:"key_schema_id,omitempty"`
 		//either value schema or value schema id must be provided for avro messages
-		ValueSchema   string            `json:"value_schema,omitempty"`
-		ValueSchemaID int               `json:"value_schema_id,omitempty"`
-		Records       []*ProducerRecord `json:"records"`
+		ValueSchema   string           `json:"value_schema,omitempty"`
+		ValueSchemaID int              `json:"value_schema_id,omitempty"`
+		Records       []ProducerRecord `json:"records"`
 	}
 
 	// ProducerRecord is an individual message for Topic / Partition
@@ -46,9 +46,9 @@ type (
 
 	// ProducerResponse is the Topic / Partition response
 	ProducerResponse struct {
-		KeySchemaID   int                `json:"key_schema_id"`
-		ValueSchemaID int                `json:"value_schema_id"`
-		Offsets       []*ProducerOffsets `json:"offsets"`
+		KeySchemaID   int               `json:"key_schema_id"`
+		ValueSchemaID int               `json:"value_schema_id"`
+		Offsets       []ProducerOffsets `json:"offsets"`
 	}
 
 	// ProducerOffsets are the resulting offsets for Topic / Partition
@@ -61,13 +61,13 @@ type (
 )
 
 // Topics lists all topics.
-func (ts *Topics) Topics() ([]*Topic, error) {
+func (ts *Topics) Topics() ([]Topic, error) {
 	ns, err := ts.Names()
 	if err != nil {
 		return nil, err
 	}
 
-	for _, n := range *ns {
+	for _, n := range ns {
 		t, err := ts.Topic(n)
 		if err != nil {
 			return ts.List, err
@@ -79,7 +79,7 @@ func (ts *Topics) Topics() ([]*Topic, error) {
 }
 
 // Names lists all topic names.
-func (ts *Topics) Names() (*TopicNames, error) {
+func (ts *Topics) Names() (TopicNames, error) {
 	client := ts.Kafka.HTTPClient()
 	url, err := URLJoin(ts.Kafka.URL, "topics")
 	if err != nil {
@@ -110,39 +110,39 @@ func (ts *Topics) Names() (*TopicNames, error) {
 		return nil, err
 	}
 
-	return &tn, nil
+	return tn, nil
 }
 
 // Topic returns the Topic with provided topicName.
-func (ts *Topics) Topic(topicName string) (*Topic, error) {
+func (ts *Topics) Topic(topicName string) (Topic, error) {
 	client := ts.Kafka.HTTPClient()
 	url, err := URLJoin(ts.Kafka.URL, "topics", topicName)
 	if err != nil {
-		return nil, err
+		return Topic{}, err
 	}
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return nil, err
+		return Topic{}, err
 	}
 	req.Header.Set("Accept", ts.Kafka.Accept)
 
 	res, err := client.Do(req)
 	if err != nil {
-		return nil, err
+		return Topic{}, err
 	}
 	defer closeBody(res)
 
 	err = validateStatusCode(res)
 	if err != nil {
-		return nil, err
+		return Topic{}, err
 	}
 
-	t := &Topic{}
+	t := Topic{}
 
-	err = json.NewDecoder(res.Body).Decode(t)
+	err = json.NewDecoder(res.Body).Decode(&t)
 	if err != nil && err != io.EOF {
-		return nil, err
+		return Topic{}, err
 	}
 
 	return t, nil

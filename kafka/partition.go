@@ -30,12 +30,12 @@ type (
 	Partitions struct {
 		Kafka *Kafka
 		Topic *Topic
-		List  *[]Partition
+		List  []Partition
 	}
 )
 
 // Partitions lists partitions for the topic.
-func (ps *Partitions) Partitions(topicName ...string) (*[]Partition, error) {
+func (ps *Partitions) Partitions(topicName ...string) ([]Partition, error) {
 	tn, err := getTopicName(ps.Topic, topicName)
 	if err != nil {
 		return nil, err
@@ -64,7 +64,7 @@ func (ps *Partitions) Partitions(topicName ...string) (*[]Partition, error) {
 		return nil, err
 	}
 
-	pss := &[]Partition{}
+	pss := []Partition{}
 
 	err = json.NewDecoder(res.Body).Decode(pss)
 	if err != nil && err != io.EOF {
